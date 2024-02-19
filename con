@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contagem Regressiva</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f5f5f5;
+            font-family: Arial, sans-serif;
+        }
+
+        #countdown {
+            display: flex;
+            gap: 10px;
+        }
+
+        .time-box {
+            padding: 20px;
+            background-color: #444;
+            color: #fff;
+            border-radius: 5px;
+        }
+
+        .time-box:not(:last-child)::after {
+            content: ":";
+            margin-left: 10px;
+            color: #444;
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+    <div id="countdown">
+        <div id="days" class="time-box"></div>
+        <div id="hours" class="time-box"></div>
+        <div id="minutes" class="time-box"></div>
+        <div id="seconds" class="time-box"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const targetDate = new Date('2024-02-26T06:05:00').getTime();
+
+            const countdownFunction = setInterval(function() {
+                const now = new Date().getTime();
+                const distance = targetDate - now;
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                document.getElementById("days").innerHTML = days + "d ";
+                document.getElementById("hours").innerHTML = hours + "h ";
+                document.getElementById("minutes").innerHTML = minutes + "m ";
+                document.getElementById("seconds").innerHTML = seconds + "s ";
+
+                if (distance < 0) {
+                    clearInterval(countdownFunction);
+                    document.getElementById("countdown").innerHTML = "EXPIRADO";
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
